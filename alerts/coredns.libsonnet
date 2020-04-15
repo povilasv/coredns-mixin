@@ -24,7 +24,7 @@
           {
             alert: 'CoreDNSLatencyHigh',
             expr: |||
-              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) with(server, zone, le)) > %(corednsLatencyCriticalSeconds)s
+              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) by(server, zone, le)) > %(corednsLatencyCriticalSeconds)s
             ||| % $._config,
             'for': '10m',
             labels: {
