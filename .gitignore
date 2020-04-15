@@ -1,3 +1,4 @@
 prometheus_alerts.yaml
 vendor
-jonnetfile.lock.json
+jsonnetfile.lock.json
+dashboards_out
