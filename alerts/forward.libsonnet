@@ -11,7 +11,7 @@
           {
             alert: 'CoreDNSForwardLatencyHigh',
             expr: |||
-              histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) without(instance, %(podLabel)s)) > %(corednsForwardLatencyCriticalSeconds)s
+              histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) with(server, zone, le)) > %(corednsForwardLatencyCriticalSeconds)s
             ||| % $._config,
             'for': '10m',
             labels: {
