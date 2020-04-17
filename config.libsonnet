@@ -7,6 +7,7 @@
       'coredns.json': 'thael1rie7ohG6OY3eMeisahtee2iGoo1gooGhuu',
     },
 
+    pluginNameLabel: 'name',
     kubernetesPlugin: false,
     grafana: {
       dashboardNamePrefix: '',

@@ -99,7 +99,7 @@ local singlestat = grafana.singlestat;
           span=2,
           valueName='min',
         )
-        .addTarget(prometheus.target('sum(coredns_plugin_enabled{%(corednsSelector)s})' % $._config));
+        .addTarget(prometheus.target('count(sum(coredns_plugin_enabled{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}) by (%(pluginNameLabel)s))' % $._config));
 
       local requestSize =
         graphPanel.new(
