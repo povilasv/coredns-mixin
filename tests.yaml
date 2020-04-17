@@ -38,11 +38,7 @@ tests:
     alertname: CoreDNSLatencyHigh
     exp_alerts:
     - exp_labels:
-        job: job
         severity: critical
-        k8s_app: kube-dns
-        kubernetes_name: coredns-kube-metrics
-        kubernetes_namespace: kube-system
         server: "dns://:53"
         zone: "."
       exp_annotations:

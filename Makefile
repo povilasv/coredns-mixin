@@ -7,7 +7,7 @@ else
 endif
 JSONNET_FMT := $(JSONNET_FMT_CMD) $(JSONNET_FMT_ARGS)
 
-all: fmt prometheus_alerts.yaml lint test
+all: fmt prometheus_alerts.yaml dashboards_out lint test 
 
 fmt:
 	find . -name 'vendor' -prune -o -name '*.libsonnet' -print -o -name '*.jsonnet' -print | \
@@ -15,6 +15,10 @@ fmt:
 
 prometheus_alerts.yaml: mixin.libsonnet lib/alerts.jsonnet alerts/*.libsonnet
 	jsonnet -J vendor -S lib/alerts.jsonnet > $@
+
+dashboards_out: mixin.libsonnet lib/dashboards.jsonnet dashboards/*.libsonnet
+	@mkdir -p dashboards_out
+	jsonnet -J vendor -m dashboards_out lib/dashboards.jsonnet
 
 lint: prometheus_alerts.yaml
 	find . -name 'vendor' -prune -o -name '*.libsonnet' -print -o -name '*.jsonnet' -print | \
@@ -25,7 +29,7 @@ lint: prometheus_alerts.yaml
 	promtool check rules prometheus_alerts.yaml
 
 clean:
-	rm -rf prometheus_alerts.yaml
+	rm -rf dashboards_out prometheus_alerts.yaml
 
 test: prometheus_alerts.yaml
 	promtool test rules tests.yaml
