@@ -7,7 +7,7 @@
       'coredns.json': 'thael1rie7ohG6OY3eMeisahtee2iGoo1gooGhuu',
     },
 
-    isKubernetes: false,
+    kubernetesPlugin: false,
     grafana: {
       dashboardNamePrefix: '',
       dashboardTags: ['coredns-mixin'],
