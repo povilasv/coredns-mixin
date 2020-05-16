@@ -14,8 +14,8 @@ local lower(x) =
   },
 
   prometheusAlerts+::
-    local addRunbookURL(rule) = rule {
-      [if 'alert' in rule then 'annotations']+: {
+    local addRunbookURL(rule, group) = rule {
+      [if 'alert' in rule && std.member(['coredns', 'coredns_forward'], group.name) then 'annotations']+: {
         runbook_url: $._config.runbookURLPattern % lower(rule.alert),
       },
     };
