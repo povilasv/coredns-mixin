@@ -3,7 +3,7 @@
     groups: [
       group {
         rules: [
-          f(rule)
+          f(rule, group)
           for rule in super.rules
         ],
       }
