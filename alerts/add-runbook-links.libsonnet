@@ -10,13 +10,13 @@ local lower(x) =
 
 {
   _config+:: {
-    runbookURLPattern: 'https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-%s',
+    corednsRunbookURLPattern: 'https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-%s',
   },
 
   prometheusAlerts+::
     local addRunbookURL(rule, group) = rule {
       [if 'alert' in rule && std.member(['coredns', 'coredns_forward'], group.name) then 'annotations']+: {
-        runbook_url: $._config.runbookURLPattern % lower(rule.alert),
+        runbook_url: $._config.corednsRunbookURLPattern % lower(rule.alert),
       },
     };
     utils.mapRuleGroups(addRunbookURL),
