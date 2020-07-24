@@ -6,9 +6,9 @@ evaluation_interval: 1m
 tests:
 - interval: 1m
   input_series:
-  - series: 'coredns_dns_response_rcode_count_total{instance="1.2.3.4:9153",job="job",k8s_app="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",rcode="NOERROR",server="dns://:53",zone="."}'
+  - series: 'coredns_dns_response_rcode_count_total{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",rcode="NOERROR",server="dns://:53",zone="."}'
     values: '0 100 200 300 400 500 600 700 800 900 1000 1100 1200'
-  - series: 'coredns_dns_response_rcode_count_total{instance="1.2.3.4:9153",job="job",k8s_app="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",rcode="SERVFAIL",server="dns://:53",zone="."}'
+  - series: 'coredns_dns_response_rcode_count_total{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",rcode="SERVFAIL",server="dns://:53",zone="."}'
     values: '0 100 200 300 400 500 600 700 800 900 1000 1100 1200'
   alert_rule_test:
   - eval_time: 11m
@@ -27,11 +27,11 @@ tests:
 
 - interval: 1m
   input_series:
-  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="job",k8s_app="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="0.001",server="dns://:53",zone="."}'
+  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="0.001",server="dns://:53",zone="."}'
     values: '0 1 2 3 4 5 6 7 8 9 10 11 12'
-  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="job",k8s_app="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="8.192",server="dns://:53",zone="."}'
+  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="8.192",server="dns://:53",zone="."}'
     values: '0 100 200 300 400 500 600 700 800 900 1000 1100 1200'
-  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="job",k8s_app="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="+Inf",server="dns://:53",zone="."}'
+  - series: 'coredns_dns_request_duration_seconds_bucket{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",le="+Inf",server="dns://:53",zone="."}'
     values: '0 100 200 300 400 500 600 700 800 900 1000 1100 1200'
   alert_rule_test:
   - eval_time: 11m

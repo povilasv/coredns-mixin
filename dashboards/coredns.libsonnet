@@ -8,7 +8,7 @@ local singlestat = grafana.singlestat;
 
 {
   _config+:: {
-    corednsSelector: 'k8s_app="kube-dns"',
+    corednsSelector: 'job="kube-dns"',
   },
 
   grafanaDashboards+:: {
