@@ -1,6 +1,6 @@
 {
   _config+:: {
-    corednsSelector: 'k8s_app="kube-dns"',
+    corednsSelector: 'job="kube-dns"',
     instanceLabel: 'pod',
 
     grafanaDashboardIDs: {
