@@ -44,3 +44,31 @@ tests:
       exp_annotations:
         message: "CoreDNS has 99th percentile latency of 8.109262626262627 seconds for server dns://:53 zone . ."
         runbook_url: "https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednslatencyhigh"
+
+- interval: 1m
+  input_series:
+  - series: 'coredns_forward_healthcheck_failures_total{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",server="dns://:53",zone=".",to="5.6.7.8"}'
+    values: '0 1 2 3 4 5 6 7 8 9 10 11 12'
+  alert_rule_test:
+    - eval_time: 11m
+      alertname: CoreDNSForwardHealthcheckFailureCount
+      exp_alerts:
+        - exp_labels:
+            severity: warning
+          exp_annotations:
+            message: "CoreDNS health checks have failed to upstream server 5.6.7.8 on 1.2.3.4:9153."
+            runbook_url: "https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwardhealthcheckfailurecount"
+
+- interval: 1m
+  input_series:
+  - series: 'coredns_forward_healthcheck_broken_total{instance="1.2.3.4:9153",job="kube-dns",kubernetes_name="coredns-kube-metrics",kubernetes_namespace="kube-system",pod="coredns-65b6759cb4-qgdxp",server="dns://:53",zone=".",to="5.6.7.8"}'
+    values: '0 1 2 3 4 5 6 7 8 9 10 11 12'
+  alert_rule_test:
+    - eval_time: 11m
+      alertname: CoreDNSForwardHealthcheckBrokenCount
+      exp_alerts:
+        - exp_labels:
+            severity: warning
+          exp_annotations:
+            message: "CoreDNS health checks have failed for all upstream servers on 1.2.3.4:9153."
+            runbook_url: "https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwardhealthcheckbrokencount"
