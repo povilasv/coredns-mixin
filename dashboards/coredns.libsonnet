@@ -29,7 +29,7 @@ local singlestat = grafana.singlestat;
           span=1,
           valueName='max',
         )
-        .addTarget(prometheus.target('sum(coredns_panic_count_total{%(corednsSelector)s})' % $._config));
+        .addTarget(prometheus.target('sum(coredns_panics_total{%(corednsSelector)s})' % $._config));
 
       local rpcRate =
         graphPanel.new(
@@ -39,8 +39,8 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_dns_response_rcode_count_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (rcode)' % $._config, legendFormat='{{rcode}}'))
-        .addTarget(prometheus.target('sum(rate(coredns_forward_response_rcode_count_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (rcode)' % $._config, legendFormat='forward {{rcode}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_dns_responses_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (rcode)' % $._config, legendFormat='{{rcode}}'))
+        .addTarget(prometheus.target('sum(rate(coredns_forward_responses_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (rcode)' % $._config, legendFormat='forward {{rcode}}'));
 
       local requestDuration =
         graphPanel.new(
@@ -66,7 +66,7 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_dns_request_type_count_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (type)' % $._config, legendFormat='{{type}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (type)' % $._config, legendFormat='{{type}}'));
 
       local zoneRate =
         graphPanel.new(
@@ -76,7 +76,7 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_dns_request_type_count_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (zone)' % $._config, legendFormat='{{zone}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (zone)' % $._config, legendFormat='{{zone}}'));
 
       local forwardRate =
         graphPanel.new(
@@ -86,7 +86,7 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_forward_request_count_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (to)' % $._config, legendFormat='{{to}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_forward_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (to)' % $._config, legendFormat='{{to}}'));
 
       local kubernetesDuration = if $._config.kubernetesPlugin then
         graphPanel.new(
@@ -215,7 +215,7 @@ local singlestat = grafana.singlestat;
         template.new(
           'instance',
           '$datasource',
-          'label_values(coredns_dns_request_count_total{%(corednsSelector)s}, %(instanceLabel)s)' % $._config,
+          'label_values(coredns_build_info{%(corednsSelector)s}, %(instanceLabel)s)' % $._config,
           refresh='time',
           includeAll=true,
           sort=1,
