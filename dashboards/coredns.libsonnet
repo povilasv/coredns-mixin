@@ -66,7 +66,7 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (type)' % $._config, legendFormat='{{type}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_dns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (type)' % $._config, legendFormat='{{type}}'));
 
       local zoneRate =
         graphPanel.new(
@@ -76,7 +76,7 @@ local singlestat = grafana.singlestat;
           format='ops',
           min=0,
         )
-        .addTarget(prometheus.target('sum(rate(coredns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (zone)' % $._config, legendFormat='{{zone}}'));
+        .addTarget(prometheus.target('sum(rate(coredns_dns_requests_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}[5m])) by (zone)' % $._config, legendFormat='{{zone}}'));
 
       local forwardRate =
         graphPanel.new(
@@ -158,7 +158,7 @@ local singlestat = grafana.singlestat;
           format='short',
           min=0,
         )
-        .addTarget(prometheus.target('sum(coredns_cache_size{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}) by (type)' % $._config, legendFormat='{{type}}'));
+        .addTarget(prometheus.target('sum(coredns_cache_entries{%(corednsSelector)s,%(instanceLabel)s=~"$instance"}) by (type)' % $._config, legendFormat='{{type}}'));
 
       local memory =
         graphPanel.new(
