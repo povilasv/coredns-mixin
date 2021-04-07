@@ -220,6 +220,7 @@ local singlestat = grafana.singlestat;
           includeAll=true,
           sort=1,
         )
+      )
       .addTemplate(
         template.new(
           'cluster',
