@@ -220,7 +220,18 @@ local singlestat = grafana.singlestat;
           includeAll=true,
           sort=1,
         )
-      ).addRow(
+      .addTemplate(
+        template.new(
+          'cluster',
+          '$datasource',
+          'label_values(kube_pod_info, %(clusterLabel)s)' % $._config,
+          label='cluster',
+          refresh='time',
+          hide=if $._config.showMultiCluster then '' else 'variable',
+          sort=1,
+        )
+      )
+      .addRow(
         row.new()
         .addPanel(upCount)
         .addPanel(panicsCount)
