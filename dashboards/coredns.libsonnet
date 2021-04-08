@@ -215,7 +215,7 @@ local singlestat = grafana.singlestat;
         template.new(
           'cluster',
           '$datasource',
-          'label_values(coredns_build_info{%(corednsSelector)s), cluster)' % $._config,
+          'label_values(coredns_build_info{%{MulticlusterSelector)s, cluster)' % $._config,
           label='cluster',
           refresh='time',
           hide=if $._config.showMultiCluster then '' else 'variable',
