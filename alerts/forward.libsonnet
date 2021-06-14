@@ -54,27 +54,27 @@
           {
             alert: 'CoreDNSForwardHealthcheckFailureCount',
             expr: |||
-              sum(rate(coredns_forward_healthcheck_failures_total{%(corednsSelector)s}[5m])) > 0
+              sum(rate(coredns_forward_healthcheck_failures_total{%(corednsSelector)s}[5m])) by (to) > 0
             ||| % $._config,
             'for': '10m',
             labels: {
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS health checks have failed to upstream server {{ $labels.to }} on {{ $labels.instance }}.',
+              message: 'CoreDNS health checks have failed to upstream server {{ $labels.to }}.',
             },
           },
           {
             alert: 'CoreDNSForwardHealthcheckBrokenCount',
             expr: |||
-              sum(rate(coredns_forward_healthcheck_broken_total[5m])) > 0
+              sum(rate(coredns_forward_healthcheck_broken_total{%(corednsSelector)s}[5m])) > 0
             ||| % $._config,
             'for': '10m',
             labels: {
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS health checks have failed for all upstream servers on {{ $labels.instance }}.',
+              message: 'CoreDNS health checks have failed for all upstream servers.',
             },
           },
         ],
