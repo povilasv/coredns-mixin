@@ -213,6 +213,16 @@ local singlestat = grafana.singlestat;
         },
       ).addTemplate(
         template.new(
+          'cluster',
+          '$datasource',
+          'label_values(coredns_build_info{%(multiclusterSelector)s}, cluster)' % $._config,
+          label='cluster',
+          refresh='time',
+          hide=if $._config.showMultiCluster then '' else 'variable',
+          sort=1,
+        )
+      ).addTemplate(
+        template.new(
           'instance',
           '$datasource',
           'label_values(coredns_build_info{%(corednsSelector)s}, %(instanceLabel)s)' % $._config,

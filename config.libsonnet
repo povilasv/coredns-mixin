@@ -1,6 +1,7 @@
 {
   _config+:: {
     corednsSelector: 'job="kube-dns"',
+    multiclusterSelector: 'job=coredns',
     instanceLabel: 'pod',
 
     grafanaDashboardIDs: {
