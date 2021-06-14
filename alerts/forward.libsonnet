@@ -51,6 +51,32 @@
               message: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.',
             },
           },
+          {
+            alert: 'CoreDNSForwardHealthcheckFailureCount',
+            expr: |||
+              sum(rate(coredns_forward_healthcheck_failures_total{%(corednsSelector)s}[5m])) > 0
+            ||| % $._config,
+            'for': '10m',
+            labels: {
+              severity: 'warning',
+            },
+            annotations: {
+              message: 'CoreDNS health checks have failed to upstream server {{ $labels.to }} on {{ $labels.instance }}.',
+            },
+          },
+          {
+            alert: 'CoreDNSForwardHealthcheckBrokenCount',
+            expr: |||
+              sum(rate(coredns_forward_healthcheck_broken_total[5m])) > 0
+            ||| % $._config,
+            'for': '10m',
+            labels: {
+              severity: 'warning',
+            },
+            annotations: {
+              message: 'CoreDNS health checks have failed for all upstream servers on {{ $labels.instance }}.',
+            },
+          },
         ],
       },
     ],
