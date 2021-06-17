@@ -37,9 +37,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum(rate(coredns_dns_response_rcode_count_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum(rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum(rate(coredns_dns_response_rcode_count_total{%(corednsSelector)s}[5m])) > 0.03
+              sum(rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.03
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -52,9 +52,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum(rate(coredns_dns_response_rcode_count_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum(rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum(rate(coredns_dns_response_rcode_count_total{%(corednsSelector)s}[5m])) > 0.01
+              sum(rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.01
             ||| % $._config,
             'for': '10m',
             labels: {
