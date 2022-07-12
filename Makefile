@@ -7,6 +7,20 @@ else
 endif
 JSONNET_FMT := $(JSONNET_FMT_CMD) $(JSONNET_FMT_ARGS)
 
+ifneq ($(SKIP_DOCKER),true)
+	PROMETHEUS_DOCKER_IMAGE := prom/prometheus:latest
+	# TODO: Find out why official prom images segfaults during `test rules` if not root
+    PROMTOOL_CMD := docker pull ${PROMETHEUS_DOCKER_IMAGE} && \
+		docker run \
+			--user root \
+			-v $(PWD):/tmp \
+			-w /tmp \
+			--entrypoint promtool \
+			$(PROMETHEUS_DOCKER_IMAGE)
+else
+	PROMTOOL_CMD := promtool
+endif
+
 all: fmt prometheus_alerts.yaml dashboards_out lint test 
 
 fmt:
@@ -26,10 +40,10 @@ lint: prometheus_alerts.yaml
 			$(JSONNET_FMT) "$$f" | diff -u "$$f" -; \
 		done
 
-	promtool check rules prometheus_alerts.yaml
+	$(PROMTOOL_CMD) check rules prometheus_alerts.yaml
 
 clean:
 	rm -rf dashboards_out prometheus_alerts.yaml
 
 test: prometheus_alerts.yaml
-	promtool test rules tests.yaml
+	$(PROMTOOL_CMD) test rules tests.yaml
