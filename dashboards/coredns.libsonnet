@@ -8,7 +8,7 @@ local singlestat = grafana.singlestat;
 
 {
   _config+:: {
-    corednsSelector: 'job="kube-dns"',
+    corednsSelector: 'job=~"kube-dns"',
   },
 
   grafanaDashboards+:: {
@@ -216,8 +216,11 @@ local singlestat = grafana.singlestat;
           'instance',
           '$datasource',
           'label_values(coredns_build_info{%(corednsSelector)s}, %(instanceLabel)s)' % $._config,
-          refresh='time',
+          label='instance',
+          refresh='load',
+          multi=true,
           includeAll=true,
+          allValues='.+',
           sort=1,
         )
       ).addRow(

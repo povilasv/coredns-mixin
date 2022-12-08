@@ -18,7 +18,8 @@
               severity: 'critical',
             },
             annotations: {
-              message: 'CoreDNS has disappeared from Prometheus target discovery.',
+              summary: 'CoreDNS has disappeared from Prometheus target discovery.',
+              description: 'CoreDNS has disappeared from Prometheus target discovery.',
             },
           },
           {
@@ -31,7 +32,8 @@
               severity: 'critical',
             },
             annotations: {
-              message: 'CoreDNS has 99th percentile latency of {{ $value }} seconds for server {{ $labels.server }} zone {{ $labels.zone }} .',
+              summary: 'CoreDNS is experiencing high 99th percentile latency.',
+              description: 'CoreDNS has 99th percentile latency of {{ $value }} seconds for server {{ $labels.server }} zone {{ $labels.zone }} .',
             },
           },
           {
@@ -46,7 +48,8 @@
               severity: 'critical',
             },
             annotations: {
-              message: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.',
+              summary: 'CoreDNS is returning SERVFAIL.',
+              description: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.',
             },
           },
           {
@@ -61,7 +64,8 @@
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.',
+              summary: 'CoreDNS is returning SERVFAIL.',
+              description: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.',
             },
           },
         ],

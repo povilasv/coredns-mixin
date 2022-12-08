@@ -18,7 +18,8 @@
               severity: 'critical',
             },
             annotations: {
-              message: 'CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding requests to {{ $labels.to }}.',
+              summary: 'CoreDNS is experiencing high latency forwarding requests.',
+              description: 'CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding requests to {{ $labels.to }}.',
             },
           },
           {
@@ -33,7 +34,8 @@
               severity: 'critical',
             },
             annotations: {
-              message: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.',
+              summary: 'CoreDNS is returning SERVFAIL for forward requests.',
+              description: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.',
             },
           },
           {
@@ -48,7 +50,8 @@
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.',
+              summary: 'CoreDNS is returning SERVFAIL for forward requests.',
+              description: 'CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.',
             },
           },
           {
@@ -61,7 +64,8 @@
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS health checks have failed to upstream server {{ $labels.to }}.',
+              summary: 'CoreDNS health checks have failed to upstream server.',
+              description: 'CoreDNS health checks have failed to upstream server {{ $labels.to }}.',
             },
           },
           {
@@ -74,7 +78,8 @@
               severity: 'warning',
             },
             annotations: {
-              message: 'CoreDNS health checks have failed for all upstream servers.',
+              summary: 'CoreDNS health checks have for all upstream servers.',
+              description: 'CoreDNS health checks have failed for all upstream servers.',
             },
           },
         ],
