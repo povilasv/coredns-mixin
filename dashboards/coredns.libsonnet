@@ -20,7 +20,7 @@ local singlestat = grafana.singlestat;
           span=1,
           valueName='min',
         )
-        .addTarget(prometheus.target('sum(up{%(corednsSelector)s})' % $._config));
+        .addTarget(prometheus.target('sum(up{%(corednsSelector)s,%(instanceLabel)s=~"$instance"})' % $._config));
 
       local panicsCount =
         singlestat.new(
@@ -29,7 +29,7 @@ local singlestat = grafana.singlestat;
           span=1,
           valueName='max',
         )
-        .addTarget(prometheus.target('sum(coredns_panics_total{%(corednsSelector)s})' % $._config));
+        .addTarget(prometheus.target('sum(coredns_panics_total{%(corednsSelector)s,%(instanceLabel)s=~"$instance"})' % $._config));
 
       local rpcRate =
         graphPanel.new(
