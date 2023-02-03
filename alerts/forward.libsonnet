@@ -1,7 +1,8 @@
 {
   _config+:: {
     corednsSelector: error 'must provide selector for coredns',
-    corednsForwardLatencyCriticalSeconds: 4,
+    corednsForwardLatencyCriticalSeconds: .5,
+    corednsForwardLatencyWarningSeconds: .3,
   },
   prometheusAlerts+:: {
     groups+: [
@@ -21,6 +22,19 @@
               message: 'CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding requests to {{ $labels.to }}.',
             },
           },
+          {
+                      alert: 'CoreDNSForwardLatencyHighWarning',
+                      expr: |||
+                        histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) by(to, le)) > %(corednsForwardLatencyWarningSeconds)s
+                      ||| % $._config,
+                      'for': '10m',
+                      labels: {
+                        severity: 'warning',
+                      },
+                      annotations: {
+                        message: 'CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding requests to {{ $labels.to }}.',
+                      },
+                    },
           {
             alert: 'CoreDNSForwardErrorsHigh',
             expr: |||
