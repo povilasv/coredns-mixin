@@ -11,9 +11,11 @@
           {
             alert: 'CoreDNSDown',
             'for': '15m',
-            expr: |||
-              absent(up{%(corednsSelector)s} == 1)
-            ||| % $._config,
+            expr:
+              if $._config.showMultiCluster then
+                'count(up{%(corednsSelector)s} offset 1h) by (%(clusterLabel)s) unless count(up{%(corednsSelector)s} ) by (%(clusterLabel)s)' % $._config
+              else
+                'absent(up{%(corednsSelector)s} == 1)' % $._config,
             labels: {
               severity: 'critical',
             },
@@ -24,7 +26,7 @@
           {
             alert: 'CoreDNSLatencyHigh',
             expr: |||
-              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) by(server, zone, le)) > %(corednsLatencyCriticalSeconds)s
+              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) by(%(clusterLabel)s, server, zone, le)) > %(corednsLatencyCriticalSeconds)s
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -37,9 +39,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum(rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum by(%(clusterLabel)s) (rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum(rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.03
+              sum by(%(clusterLabel)s) (rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.03
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -52,9 +54,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum(rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum by(%(clusterLabel)s) (rate(coredns_dns_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum(rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.01
+              sum by(%(clusterLabel)s) (rate(coredns_dns_responses_total{%(corednsSelector)s}[5m])) > 0.01
             ||| % $._config,
             'for': '10m',
             labels: {

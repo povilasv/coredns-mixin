@@ -16,5 +16,8 @@
       // The default refresh time for all dashboards, default to 10s
       refresh: '10s',
     },
+
+    showMultiCluster: false,
+    clusterLabel: 'cluster',
   },
 }
