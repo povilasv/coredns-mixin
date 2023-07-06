@@ -1,6 +1,8 @@
 {
   _config+:: {
-    corednsSelector: 'job="kube-dns"',
+    enableMultiCluster: false,
+    corednsSelector: if self.enableMultiCluster then 'job=~"kube-dns", cluster=~"$cluster"' else 'job=~"kube-dns"',
+    multiclusterSelector: 'job=~"kube-dns"',
     instanceLabel: 'pod',
 
     grafanaDashboardIDs+: {
