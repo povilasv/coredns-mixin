@@ -1,5 +1,6 @@
 {
   _config+:: {
+    # Dashboard configurations
     enableMultiCluster: false,
     corednsSelector: if self.enableMultiCluster then 'job=~"kube-dns", cluster=~"$cluster"' else 'job=~"kube-dns"',
     multiclusterSelector: 'job=~"kube-dns"',
@@ -18,5 +19,8 @@
       // The default refresh time for all dashboards, default to 10s
       refresh: '10s',
     },
+
+    # Alert configurations
+    corednsSelectorAlerts: 'job=~"kube-dns"'
   },
 }

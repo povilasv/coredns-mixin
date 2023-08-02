@@ -1,6 +1,6 @@
 {
   _config+:: {
-    corednsSelector: error 'must provide selector for coredns',
+    corednsSelectorAlerts: error 'must provide selector for coredns',
     corednsForwardLatencyCriticalSeconds: 4,
   },
   prometheusAlerts+:: {
@@ -11,7 +11,7 @@
           {
             alert: 'CoreDNSForwardLatencyHigh',
             expr: |||
-              histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{%(corednsSelector)s}[5m])) without (pod, instance, rcode)) > %(corednsForwardLatencyCriticalSeconds)s
+              histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{%(corednsSelectorAlerts)s}[5m])) without (pod, instance, rcode)) > %(corednsForwardLatencyCriticalSeconds)s
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -25,9 +25,9 @@
           {
             alert: 'CoreDNSForwardErrorsHigh',
             expr: |||
-              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelector)s}[5m])) > 0.03
+              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.03
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -41,9 +41,9 @@
           {
             alert: 'CoreDNSForwardErrorsHigh',
             expr: |||
-              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelector)s,rcode="SERVFAIL"}[5m]))
+              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelector)s}[5m])) > 0.01
+              sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.01
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -57,7 +57,7 @@
           {
             alert: 'CoreDNSForwardHealthcheckFailureCount',
             expr: |||
-              sum without (pod, instance) (rate(coredns_forward_healthcheck_failures_total{%(corednsSelector)s}[5m])) > 0
+              sum without (pod, instance) (rate(coredns_forward_healthcheck_failures_total{%(corednsSelectorAlerts)s}[5m])) > 0
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -71,7 +71,7 @@
           {
             alert: 'CoreDNSForwardHealthcheckBrokenCount',
             expr: |||
-              sum without (pod, instance) (rate(coredns_forward_healthcheck_broken_total{%(corednsSelector)s}[5m])) > 0
+              sum without (pod, instance) (rate(coredns_forward_healthcheck_broken_total{%(corednsSelectorAlerts)s}[5m])) > 0
             ||| % $._config,
             'for': '10m',
             labels: {
