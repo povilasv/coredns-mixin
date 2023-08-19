@@ -1,6 +1,6 @@
 {
   _config+:: {
-    # Dashboard configurations
+    // Dashboard configurations
     enableMultiCluster: false,
     corednsSelector: if self.enableMultiCluster then 'job=~"kube-dns", cluster=~"$cluster"' else 'job=~"kube-dns"',
     multiclusterSelector: 'job=~"kube-dns"',
@@ -20,7 +20,7 @@
       refresh: '10s',
     },
 
-    # Alert configurations
+    // Alert configurations
     corednsSelectorAlerts: 'job=~"kube-dns"'
   },
 }

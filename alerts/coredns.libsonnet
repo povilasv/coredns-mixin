@@ -1,6 +1,6 @@
 {
   _config+:: {
-    corednsSelectorAlertsAlerts: error 'must provide selector for coredns',
+    corednsSelectorAlerts: error 'must provide selector for coredns',
     corednsLatencyCriticalSeconds: 4,
   },
   prometheusAlerts+:: {
