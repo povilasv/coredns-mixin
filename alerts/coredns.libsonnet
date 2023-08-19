@@ -25,7 +25,7 @@
           {
             alert: 'CoreDNSLatencyHigh',
             expr: |||
-              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelectorAlerts)s}[5m])) without (instance,pod)) > %(corednsLatencyCriticalSeconds)s
+              histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{%(corednsSelectorAlerts)s}[5m])) without (instance,pod,cluster)) > %(corednsLatencyCriticalSeconds)s
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -39,9 +39,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
+              sum without (pod, instance, cluster, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.03
+              sum without (pod, instance, cluster, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.03
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -55,9 +55,9 @@
           {
             alert: 'CoreDNSErrorsHigh',
             expr: |||
-              sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
+              sum without (pod, instance, cluster, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s,rcode="SERVFAIL"}[5m]))
                 /
-              sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.01
+              sum without (pod, instance, cluster, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{%(corednsSelectorAlerts)s}[5m])) > 0.01
             ||| % $._config,
             'for': '10m',
             labels: {
